@@ -7,8 +7,8 @@
 Summary: A free h264/avc encoder
 Name: x264
 Version: 0.142
-%define pkgversion 20140406-2245
-Release: 20_20140406.2245%{?dist}
+%define pkgversion 20141218-2245
+Release: 21_20141218.2245%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://www.videolan.org/developers/x264.html
@@ -60,6 +60,9 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
+* Sat May 2 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.142-21_20141218.2245
+- Update to latest stable snapshot.
+
 * Mon Apr  7 2014 Axel Thimm <Axel.Thimm@ATrpms.net> - 0.142-20_20140406.2245
 - Update to latest stable snapshot.
 
