@@ -8,14 +8,14 @@ Summary: A free h264/avc encoder
 Name: x264
 Version: 0.142
 %define pkgversion 20141218-2245
-Release: 21_20141218.2245%{?dist}
+Release: 22_20141218.2245%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://www.videolan.org/developers/x264.html
 Source0: ftp://ftp.videolan.org/pub/videolan/x264/snapshots/%{name}-snapshot-%{pkgversion}-stable.tar.bz2
 Patch0: x264-snapshot-20060912-2245-gtkincludes.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libX11-devel
+BuildRequires: libX11-devel, atrpms-rpm-config
 %{?with_gpac:BuildRequires: gpac-devel}
 BuildRequires: nasm, yasm, %{?with_gtk:gtk2-devel}
 BuildRequires: gettext
@@ -60,6 +60,9 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
+* Wed May 6 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.142-22_20141218.2245
+- Added buildrequirement atrpms-rpm-config
+
 * Sat May 2 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.142-21_20141218.2245
 - Update to latest stable snapshot.
 
