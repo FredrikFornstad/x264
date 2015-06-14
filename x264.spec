@@ -1,33 +1,47 @@
 %bcond_with gtk
 %bcond_with gpac
 
-%lib_package x264 142
-%{?with_gtk:%lib_package x264gtk 142}
+%global x264lib 144
+%{?with_gtk:%global x264gtklib 144}
 
 Summary: A free h264/avc encoder
 Name: x264
-Version: 0.142
-%define pkgversion 20141218-2245
-Release: 22_20141218.2245%{?dist}
+Version: 0.144
+%define pkgversion 0.144-2533-stable
+Release: 2533_1%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://www.videolan.org/developers/x264.html
-Source0: ftp://ftp.videolan.org/pub/videolan/x264/snapshots/%{name}-snapshot-%{pkgversion}-stable.tar.bz2
+Source0: %{name}-%{pkgversion}.tar.bz2
 Patch0: x264-snapshot-20060912-2245-gtkincludes.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libX11-devel, atrpms-rpm-config
+BuildRequires: libX11-devel
 %{?with_gpac:BuildRequires: gpac-devel}
 BuildRequires: nasm, yasm, %{?with_gtk:gtk2-devel}
 BuildRequires: gettext
 BuildRequires: perl(Digest::MD5)
-Obsoletes: x264-libs <= %{evr}
-%lib_dependencies
+Requires: x264-libs_%{x264lib}
 
 %description
 x264 is a free library for encoding H264/AVC video streams.
 
+%package libs_%{x264lib}
+Summary: Library for encoding H264/AVC video streams.
+Group: Development/Libraries
+Obsoletes: libx264_%{x264lib}
+
+%description libs_%{x264lib}
+Shared libraries for the x264 package.
+
+%package devel
+Summary: Development files for the x264 library.
+Group: Development/Libraries
+
+%description devel
+x264 development headers and libraries.
+
 %prep
-%setup -q -n %{name}-snapshot-%{pkgversion}-stable
+%setup -q -n %{name}-%{pkgversion}
 #patch0 -p1 -b .gtkincludes
 perl -pi -e's, -lintl,,' gtk/Makefile
 grep -rl /usr/X11R6/lib . | xargs perl -pi -e's,/usr/X11R6/lib,%{_x_libraries},'
@@ -50,8 +64,21 @@ mkdir -p %{buildroot}%{_includedir} %{buildroot}%{_libdir}/pkgconfig \
 make install DESTDIR=%{buildroot}
 %{?with_gtk:%find_lang x264_gtk}
 
+%post libs_%{x264lib} -p /sbin/ldconfig
+
+%postun libs_%{x264lib} -p /sbin/ldconfig
+
 %clean
 rm -rf %{buildroot}
+
+%files devel
+%{_includedir}/x264.h
+%{_includedir}/x264_config.h
+%{_libdir}/libx264.so
+%{_libdir}/pkgconfig/x264.pc
+
+%files libs_%{x264lib}
+%{_libdir}/libx264.so.%{x264lib}
 
 %files %{?with_gtk:-f x264_gtk.lang}
 %defattr(-,root,root,-)
@@ -60,6 +87,11 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
+* Sat Jun 13 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.144-2533_1
+- Removed dependency of atrpms to comply with ClearOS policy
+- Updated upstream to latest stable from Git
+- Added post and postun ldconfig
+
 * Wed May 6 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.142-22_20141218.2245
 - Added buildrequirement atrpms-rpm-config
 
