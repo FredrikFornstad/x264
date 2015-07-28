@@ -1,18 +1,18 @@
 %bcond_with gtk
 %bcond_with gpac
 
-%global x264lib 144
-%{?with_gtk:%global x264gtklib 144}
+%global x264lib 146
+%{?with_gtk:%global x264gtklib 146}
 
 Summary: A free h264/avc encoder
 Name: x264
-Version: 0.144
-%define pkgversion 0.144-2533-stable
-Release: 2533_1%{?dist}
+Version: 0.146
+%define pkgversion 20150727-2245
+Release: 24_20150727.2245%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://www.videolan.org/developers/x264.html
-Source0: %{name}-%{pkgversion}.tar.bz2
+Source0: ftp://ftp.videolan.org/pub/videolan/x264/snapshots/%{name}-snapshot-%{pkgversion}-stable.tar.bz2
 Patch0: x264-snapshot-20060912-2245-gtkincludes.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libX11-devel
@@ -41,7 +41,7 @@ Group: Development/Libraries
 x264 development headers and libraries.
 
 %prep
-%setup -q -n %{name}-%{pkgversion}
+%setup -q -n %{name}-snapshot-%{pkgversion}-stable
 #patch0 -p1 -b .gtkincludes
 perl -pi -e's, -lintl,,' gtk/Makefile
 grep -rl /usr/X11R6/lib . | xargs perl -pi -e's,/usr/X11R6/lib,%{_x_libraries},'
@@ -87,6 +87,9 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
+* Tue Jul 28 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.146-24_20150728.2245
+- Updated upstream to latest stable snapshot
+
 * Sat Jun 13 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.144-2533_1
 - Removed dependency of atrpms to comply with ClearOS policy
 - Updated upstream to latest stable from Git
