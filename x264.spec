@@ -87,7 +87,7 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
-* Tue Jul 28 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.146-24_20150728.2245
+* Tue Jul 28 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.146-24_20150727.2245
 - Updated upstream to latest stable snapshot
 
 * Sat Jun 13 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.144-2533_1
