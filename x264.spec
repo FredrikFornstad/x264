@@ -1,14 +1,14 @@
 %bcond_with gtk
 %bcond_with gpac
 
-%global x264lib 146
-%{?with_gtk:%global x264gtklib 146}
+%global x264lib 148
+%{?with_gtk:%global x264gtklib 148}
 
 Summary: A free h264/avc encoder
 Name: x264
-Version: 0.146
-%define pkgversion 20150727-2245
-Release: 24_20150727.2245%{?dist}
+Version: 0.148
+%define pkgversion 20151019-2245
+Release: 25_20151019.2245%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://www.videolan.org/developers/x264.html
@@ -87,6 +87,9 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
+* Tue Oct 20 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.148-25_20151019.2245
+- Updated upstream to latest stable snapshot
+
 * Tue Jul 28 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.146-24_20150727.2245
 - Updated upstream to latest stable snapshot
 
