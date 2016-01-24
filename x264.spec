@@ -6,9 +6,9 @@
 
 Summary: A free h264/avc encoder
 Name: x264
-Version: 0.148
-%define pkgversion 20151019-2245
-Release: 25_20151019.2245%{?dist}
+Version: 0.%{x264lib}
+%define pkgversion 20160123-2245
+Release: 26_20160123.2245%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://www.videolan.org/developers/x264.html
@@ -20,17 +20,17 @@ BuildRequires: libX11-devel
 BuildRequires: nasm, yasm, %{?with_gtk:gtk2-devel}
 BuildRequires: gettext
 BuildRequires: perl(Digest::MD5)
-Requires: x264-libs_%{x264lib}
+Requires: x264-libs = %{version}
 
 %description
 x264 is a free library for encoding H264/AVC video streams.
 
-%package libs_%{x264lib}
+%package libs
 Summary: Library for encoding H264/AVC video streams.
 Group: Development/Libraries
-Obsoletes: libx264_%{x264lib}
+Obsoletes: libx264_%{x264lib}, libx264_146, x264-libs_146, x264-libs_148
 
-%description libs_%{x264lib}
+%description libs
 Shared libraries for the x264 package.
 
 %package devel
@@ -64,9 +64,9 @@ mkdir -p %{buildroot}%{_includedir} %{buildroot}%{_libdir}/pkgconfig \
 make install DESTDIR=%{buildroot}
 %{?with_gtk:%find_lang x264_gtk}
 
-%post libs_%{x264lib} -p /sbin/ldconfig
+%post libs -p /sbin/ldconfig
 
-%postun libs_%{x264lib} -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %clean
 rm -rf %{buildroot}
@@ -77,7 +77,7 @@ rm -rf %{buildroot}
 %{_libdir}/libx264.so
 %{_libdir}/pkgconfig/x264.pc
 
-%files libs_%{x264lib}
+%files libs
 %{_libdir}/libx264.so.%{x264lib}
 
 %files %{?with_gtk:-f x264_gtk.lang}
@@ -87,6 +87,10 @@ rm -rf %{buildroot}
 %{?with_gtk:%{_datadir}/x264/x264.png}
 
 %changelog
+* Sun Jan 24 2016 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.148-26_20160123.2245
+- Updated upstream to latest stable snapshot
+- Changed naming of shared lib after discussion with ClearOS team
+
 * Tue Oct 20 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.148-25_20151019.2245
 - Updated upstream to latest stable snapshot
 
